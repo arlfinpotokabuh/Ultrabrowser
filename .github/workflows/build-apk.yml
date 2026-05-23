@@ -25,8 +25,8 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          npm cache clean --force
-          npm ci
+          npm install
+          npm rebuild @tailwindcss/oxide
 
       - name: Build Web App
         run: npm run build
