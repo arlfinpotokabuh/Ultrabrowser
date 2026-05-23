@@ -33,7 +33,7 @@ Sebelum memulai, pastikan hosting Anda memenuhi persyaratan minimum berikut:
    - **Application Mode**: Pilih **production**.
    - **Application Root**: Jalur relatif folder tempat Anda mengekstrak source code tadi (misal: `browser-app`).
    - **Application URL**: Pilih domain atau subdomain Anda (misal: `https://browserku.com`).
-   - **Application Startup File**: Masukkan **`app.js`** *(Catatan: File `app.js` ini telah kami sediakan di dalam folder root sebagai jembatan pembuka untuk mendeteksi runtime `dist/server.cjs` hasil kompilasi secara instan).*
+   - **Application Startup File**: Masukkan **`app.cjs`** *(Catatan: File `app.cjs` ini telah kami sediakan di dalam folder root sebagai jembatan pembuka untuk mendeteksi runtime `dist/server.cjs` hasil kompilasi secara instan).*
 5. Klik **Create** untuk mengaktifkan konfigurasi.
 
 ---

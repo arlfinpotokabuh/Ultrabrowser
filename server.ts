@@ -3307,7 +3307,10 @@ async function startServer() {
   }
 }
 
-startServer().catch(console.error);
+startServer().catch((err) => {
+  console.error("Failed to start server:", err);
+  process.exit(1);
+});
 
 // =========================================================================
 // === MEDIA BYPASS HELPERS & HTML RENDER TEMPLATES ===
