@@ -1,24 +1,53 @@
-0s
-1s
-Run ls -la
-  ls -la
-  npm install
-  shell: /usr/bin/bash -e {0}
-  env:
-    JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.19-10/x64
-    JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.19-10/x64
-total 20
-drwxr-xr-x 4 runner runner 4096 May 23 14:32 .
-drwxr-xr-x 3 runner runner 4096 May 23 14:32 ..
-drwxr-xr-x 7 runner runner 4096 May 23 14:32 .git
-drwxr-xr-x 3 runner runner 4096 May 23 14:32 .github
--rw-r--r-- 1 runner runner  329 May 23 14:32 README.md
-npm error code ENOENT
-npm error syscall open
-npm error path /home/runner/work/Ultrabrowser/Ultrabrowser/package.json
-npm error errno -2
-npm error enoent Could not read package.json: Error: ENOENT: no such file or directory, open '/home/runner/work/Ultrabrowser/Ultrabrowser/package.json'
-npm error enoent This is related to npm not being able to find a file.
-npm error enoent
-npm error A complete log of this run can be found in: /home/runner/.npm/_logs/2026-05-23T14_32_19_974Z-debug-0.log
-Error: Process completed with exit code 254.
+name: Build APK
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Debug file structure
+        run: ls -la
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Install Dependencies
+        run: |
+          ls -la
+          npm install
+
+      - name: Build Web App
+        run: npm run build
+
+      - name: Add Capacitor Android
+        run: npx cap add android
+
+      - name: Copy Capacitor Assets
+        run: npx cap copy
+
+      - name: Build Android APK
+        run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug.apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
