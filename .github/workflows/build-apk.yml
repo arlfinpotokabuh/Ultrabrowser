@@ -11,6 +11,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          path: .
+
+      - name: Debug file structure
+        run: ls -la
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -24,7 +29,9 @@ jobs:
           distribution: 'temurin'
 
       - name: Install Dependencies
-        run: npm install
+        run: |
+          ls -la
+          npm install
 
       - name: Build Web App
         run: npm run build
