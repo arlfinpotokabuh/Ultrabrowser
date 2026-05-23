@@ -40,7 +40,7 @@ const upload = multer({ storage: storage });
 async function startServer() {
   const app = express();
   app.set("trust proxy", true);
-  const PORT = process.env.PORT || 3000;
+  const PORT = 3000;
 
   app.use(cors());
 
