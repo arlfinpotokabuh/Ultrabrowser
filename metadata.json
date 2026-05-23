@@ -1,6 +1,6 @@
 {
   "name": "UltraBrowser v6",
-  "description": "Wab browser interaktif",
+  "description": "Web browser interaktif",
   "requestFramePermissions": [
     "camera",
     "microphone",

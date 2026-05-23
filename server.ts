@@ -15,12 +15,12 @@ import http from "http";
 import { Readable } from "stream";
 import { execSync } from "child_process";
 
-const uploadDir = path.join(process.cwd(), "cloud_storage");
+const uploadDir = path.join("/tmp", "cloud_storage");
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
 
-const bufferDir = path.join(process.cwd(), "buffers");
+const bufferDir = path.join("/tmp", "buffers");
 if (!fs.existsSync(bufferDir)) {
   fs.mkdirSync(bufferDir, { recursive: true });
 }
@@ -40,7 +40,7 @@ const upload = multer({ storage: storage });
 async function startServer() {
   const app = express();
   app.set("trust proxy", true);
-  const PORT = 3000;
+  const PORT = process.env.PORT || 3000;
 
   app.use(cors());
 
@@ -567,7 +567,7 @@ async function startServer() {
 
     
     // Save locally to a workspace JSON file so the agent in background has full visibility!
-    const reportPath = path.join(process.cwd(), "studio_error_reports.json");
+    const reportPath = path.join("/tmp", "studio_error_reports.json");
     let currentReports: any[] = [];
     if (fs.existsSync(reportPath)) {
       try {
@@ -652,7 +652,7 @@ async function startServer() {
         Format output WAJIB JSON murni.`;
 
         const response = await ai.models.generateContent({
-          model: "gemini-3.5-flash",
+          model: "gemini-flash-latest",
           contents: prompt,
           config: {
             responseMimeType: "application/json",
@@ -3307,7 +3307,7 @@ async function startServer() {
   }
 }
 
-startServer();
+startServer().catch(console.error);
 
 // =========================================================================
 // === MEDIA BYPASS HELPERS & HTML RENDER TEMPLATES ===
