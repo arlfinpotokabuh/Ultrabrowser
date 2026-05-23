@@ -27,7 +27,7 @@ jobs:
         run: |
           npm install -g npm@latest
           rm -rf node_modules package-lock.json
-          npm install
+          npm install --include=optional
 
       - name: Build Web App
         run: npm run build
